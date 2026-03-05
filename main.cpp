@@ -1,6 +1,8 @@
 #include "World.h"
 #include "Player.h"
 #include "Plains.h"
+#include "Swamp.h"
+#include "Scout.h"
 #include <vector>
 #include <iostream>
 
@@ -20,6 +22,8 @@ int main() {
     for (int i = 0; i < numberOfPlayers; ++i) {
         Player player;
         // TODO: Create a Scout and add it to the player's units 
+        player.addUnit(&Scout);
+        world.placeUnitRandomly(&Scout, i);
         // TODO: placeUnitRandomly in the world
         players.push_back(player);
     }
