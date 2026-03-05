@@ -20,21 +20,21 @@ int main() {
 
     // Initialize players and their scouts
     for (int i = 0; i < numberOfPlayers; ++i) {
-        Player player;
-        // TODO: Create a Scout and add it to the player's units 
-        player.addUnit(&Scout);
-        world.placeUnitRandomly(&Scout, i);
-        // TODO: placeUnitRandomly in the world
-        players.push_back(player);
+        players.emplace_back();
+        Unit* scout = new Scout();
+        players.back().addUnit(scout);
+        world.placeUnitRandomly(scout, i);
     }
 
     // Main game loop
     char userChoice = 'n'; // Default choice to start the game
     while (userChoice != 'y') {
         for (int i = 0; i < numberOfPlayers; ++i) {
-            
-            //TODO: For each unit the player owns, activate that unit
-            //tip: You may need to pass a reference to the world and the player number
+            std::cout << "\n--- Player " << (i + 1) << " Turn ---\n";
+            const std::vector<Unit*>& units = players[i].getUnits();
+            for (Unit* unit : units) {
+                unit->action(i, world);
+            }
         }
 
 

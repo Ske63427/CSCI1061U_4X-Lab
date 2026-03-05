@@ -9,4 +9,8 @@ void Player::addUnit(Unit* unit) {
     units.push_back(unit);
 }
 
+const std::vector<Unit*>& Player::getUnits() const {
+    return units;
+}
+
 // Implement other member functions as necessary

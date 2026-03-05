@@ -13,6 +13,7 @@ public:
     Player();
     //TODO: Declare a function to add a unit to the vector
     void addUnit(Unit* unit);
+    const std::vector<Unit*>& getUnits() const;
     // Other member functions...
 };
 
