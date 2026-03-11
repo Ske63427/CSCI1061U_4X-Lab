@@ -3,10 +3,16 @@
 #include "Plains.h"
 #include "Swamp.h"
 #include "Scout.h"
+#include "Researcher.h"
+#include "horse.h"
 #include <vector>
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 int main() {
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
     World world;
     int numberOfPlayers;
     std::vector<Player> players;
@@ -28,6 +34,10 @@ int main() {
 
         if (i == 0) {
             std::cout << "Player 1 starting Scout is using Binoculars (sight +2).\n";
+            Unit* horse = new Horse();
+            players.back().addUnit(horse);
+            world.placeUnitRandomly(horse, i);
+            std::cout << "Player 1 starts with a Horse (3 moves, no swamps).\n";
         }
     }
 
@@ -36,6 +46,8 @@ int main() {
     while (userChoice != 'y') {
         for (int i = 0; i < numberOfPlayers; ++i) {
             std::cout << "\n--- Player " << (i + 1) << " Turn ---\n";
+
+            Scout::setPlayerVisionBonus(i, players[i].getVisionBonus());
 
             if (!players[i].hasResearchedTechnology("Binoculars")) {
                 if (!players[i].isResearchInProgress()) {
@@ -50,9 +62,13 @@ int main() {
                 players[i].advanceResearch();
             }
 
-            const std::vector<Unit*>& units = players[i].getUnits();
-            for (Unit* unit : units) {
+            Scout::setPlayerVisionBonus(i, players[i].getVisionBonus());
+
+            const std::size_t unitsThisTurn = players[i].getUnits().size();
+            for (std::size_t unitIndex = 0; unitIndex < unitsThisTurn; ++unitIndex) {
+                Unit* unit = players[i].getUnits()[unitIndex];
                 unit->action(i, world);
+                players[i].tryFindResearcher(world, i);
             }
         }
 

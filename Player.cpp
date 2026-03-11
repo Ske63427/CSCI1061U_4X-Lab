@@ -1,6 +1,9 @@
 #include "Player.h"
 #include "Binoculars.h"
+#include "Researcher.h"
+#include "World.h"
 #include <iostream>
+#include <cstdlib>
 
 Player::Player() {
     visionBonus = 0;
@@ -15,11 +18,16 @@ const std::vector<Unit*>& Player::getUnits() const {
 }
 
 void Player::startBinocularsResearch() {
+    if (!canResearch()) {
+        std::cout << "You need a Researcher unit to begin research.\n";
+        return;
+    }
+
     if (activeResearch || hasResearchedTechnology("Binoculars")) {
         return;
     }
 
-    activeResearch = std::make_shared<BinocularsTechnology>();
+    activeResearch = std::make_shared<Binoculars>();
 }
 
 void Player::advanceResearch() {
@@ -27,16 +35,25 @@ void Player::advanceResearch() {
         return;
     }
 
-    bool completed = activeResearch->advanceResearch(*this);
+    int speed = getResearchSpeed();
+    if (speed == 0) {
+        std::cout << "Research paused. No Researchers available.\n";
+        return;
+    }
+
+    for (int tick = 0; tick < speed; ++tick) {
+        bool completed = activeResearch->advanceResearch(*this);
+        if (completed) {
+            std::cout << activeResearch->getName() << " researched! Permanent vision bonus unlocked.\n";
+            researchedTechnologies.push_back(activeResearch);
+            activeResearch.reset();
+            return;
+        }
+    }
+
     std::cout << "Researching " << activeResearch->getName() << " ("
               << activeResearch->getProgress() << "/" << activeResearch->getResearchTurns()
-              << ")\n";
-
-    if (completed) {
-        researchedTechnologies.push_back(activeResearch);
-        std::cout << activeResearch->getName() << " researched. Permanent vision bonus unlocked.\n";
-        activeResearch.reset();
-    }
+              << ") [Speed: " << speed << "]\n";
 }
 
 bool Player::hasResearchedTechnology(const std::string& technologyName) const {
@@ -59,4 +76,36 @@ void Player::applyVisionBonus(int amount) {
 
 int Player::getVisionBonus() const {
     return visionBonus;
+}
+
+
+int Player::getResearcherCount() const {
+    int count = 0;
+    for (Unit* unit : units) {
+        if (unit->getName() == "Researcher") {
+            ++count;
+        }
+    }
+    return count;
+}
+
+bool Player::canResearch() const {
+    return getResearcherCount() > 0;
+}
+
+int Player::getResearchSpeed() const {
+    return getResearcherCount();
+}
+
+void Player::tryFindResearcher(World& world, int playerNumber) {
+    if (getResearcherCount() >= 3) {
+        return;
+    }
+
+    if ((std::rand() % 100) < 100) {
+        Unit* researcher = new Researcher();
+        addUnit(researcher);
+        world.placeUnitRandomly(researcher, playerNumber);
+        std::cout << "Player " << (playerNumber + 1) << " found a Researcher during exploration!\n";
+    }
 }

@@ -7,6 +7,8 @@
 #include <string>
 #include <memory>
 
+class World;
+
 class Player {
 private:
     std::vector<Unit*> units;
@@ -27,6 +29,10 @@ public:
 
     void applyVisionBonus(int amount);
     int getVisionBonus() const;
+    int getResearcherCount() const;
+    bool canResearch() const;
+    int getResearchSpeed() const;
+    void tryFindResearcher(World& world, int playerNumber);
 };
 
 

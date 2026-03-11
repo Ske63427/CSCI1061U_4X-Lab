@@ -4,12 +4,13 @@
 #include "Technology.h"
 #include "Player.h"
 
-class BinocularsTechnology : public Technology {
+// They just buff your sight range, requires researchers
+class Binoculars : public Technology {
 private:
     int visionBonus;
 
 public:
-    BinocularsTechnology() : Technology("Binoculars", 3), visionBonus(2) {}
+    Binoculars() : Technology("Binoculars", 3), visionBonus(2) {}
 
     void onResearchComplete(Player& player) override {
         player.applyVisionBonus(visionBonus);
