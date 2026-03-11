@@ -7,7 +7,7 @@
 
 class Scout : public Unit {
 public:
-    Scout() : Unit(2) {}
+    explicit Scout(int sightRange = 2) : Unit(sightRange) {}
 
     std::string getName() const override { return "Scout"; }
     void action(int playerNumber, World& world) override {

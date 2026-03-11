@@ -2,19 +2,31 @@
 #define PLAYER_H
 
 #include "Unit.h"
+#include "Technology.h"
 #include <vector>
+#include <string>
+#include <memory>
 
 class Player {
 private:
-    //TODO: Add a vector of unit pointers
     std::vector<Unit*> units;
+    std::vector<std::shared_ptr<Technology>> researchedTechnologies;
+    std::shared_ptr<Technology> activeResearch;
+    int visionBonus;
 
 public:
     Player();
-    //TODO: Declare a function to add a unit to the vector
+
     void addUnit(Unit* unit);
     const std::vector<Unit*>& getUnits() const;
-    // Other member functions...
+
+    void startBinocularsResearch();
+    void advanceResearch();
+    bool hasResearchedTechnology(const std::string& technologyName) const;
+    bool isResearchInProgress() const;
+
+    void applyVisionBonus(int amount);
+    int getVisionBonus() const;
 };
 
 

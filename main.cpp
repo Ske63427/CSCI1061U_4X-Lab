@@ -21,9 +21,14 @@ int main() {
     // Initialize players and their scouts
     for (int i = 0; i < numberOfPlayers; ++i) {
         players.emplace_back();
-        Unit* scout = new Scout();
+        // Test setup: Player 1 starts with binoculars on their initial scout.
+        Unit* scout = (i == 0) ? static_cast<Unit*>(new Scout(4)) : static_cast<Unit*>(new Scout());
         players.back().addUnit(scout);
         world.placeUnitRandomly(scout, i);
+
+        if (i == 0) {
+            std::cout << "Player 1 starting Scout is using Binoculars (sight +2).\n";
+        }
     }
 
     // Main game loop
@@ -31,6 +36,20 @@ int main() {
     while (userChoice != 'y') {
         for (int i = 0; i < numberOfPlayers; ++i) {
             std::cout << "\n--- Player " << (i + 1) << " Turn ---\n";
+
+            if (!players[i].hasResearchedTechnology("Binoculars")) {
+                if (!players[i].isResearchInProgress()) {
+                    char startResearch;
+                    std::cout << "Start researching Binoculars? (y/n): ";
+                    std::cin >> startResearch;
+                    if (startResearch == 'y' || startResearch == 'Y') {
+                        players[i].startBinocularsResearch();
+                    }
+                }
+
+                players[i].advanceResearch();
+            }
+
             const std::vector<Unit*>& units = players[i].getUnits();
             for (Unit* unit : units) {
                 unit->action(i, world);
