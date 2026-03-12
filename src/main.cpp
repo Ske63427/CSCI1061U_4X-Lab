@@ -5,6 +5,7 @@
 #include "../include/Units/Scout.h"
 #include "../include/Units/Researcher.h"
 #include "../include/Units/Horse.h"
+#include "../include/Buildings/Building.h"
 
 #include <vector>
 #include <iostream>
@@ -32,6 +33,8 @@ int main() {
         Unit* scout = (i == 0) ? static_cast<Unit*>(new Scout(4)) : static_cast<Unit*>(new Scout());
         players.back().addUnit(scout);
         world.placeUnitRandomly(scout, i);
+        Building* building = world.placeBuilding(i);
+        players.back().addBuilding(building);
 
         if (i == 0) {
             std::cout << "Player 1 starting Scout is using Binoculars (sight +2).\n";

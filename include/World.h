@@ -32,7 +32,7 @@ public:
     bool moveUnit(Unit* unit, const std::string& direction, int playerNumber);
     void displayMapWithSight(int playerNumber, int sight, Unit* unit) const;
     bool isPositionOccupied(int x, int y) const;
-    void placeBuilding(int playerNumber);
+    Building* placeBuilding(int playerNumber);
     std::string getTerrainTypeAhead(Unit* unit, const std::string& direction) const;
 };
 

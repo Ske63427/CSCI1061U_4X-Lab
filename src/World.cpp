@@ -37,6 +37,19 @@ namespace {
         char symbol = name.empty() ? '?' : static_cast<char>(std::toupper(static_cast<unsigned char>(name[0])));
         return std::string(1, symbol) + std::to_string(ownerIndex + 1);
     }
+
+    std::string getBuildingToken(Building* building, int ownerIndex){
+        if (!building){
+            return "??";
+        }
+        const std::string name = building->getName();
+        if (name == "Gold Mine"){
+            return "M" + std::to_string(ownerIndex + 1);
+        } else if (name == "Gold Panner"){
+            return "P" + std::to_string(ownerIndex + 1);
+        }
+        return "??";
+    }
 }
 
 World::World() : grid(size, std::vector<Terrain*>(size, nullptr)) {
@@ -69,6 +82,13 @@ void World::displayMap() const {
                 }
             }
 
+            for (const auto& pair : buildingPositions) {
+                if (pair.second.first.first == i && pair.second.first.second == j) {
+                    tile = getBuildingToken(pair.first, pair.second.second);
+                    break;
+                }
+            }
+
             std::cout << tile;
             if (j < size - 1) {
                 std::cout << " ";
@@ -88,20 +108,16 @@ void World::placeUnitRandomly(Unit* unit, int playerNumber) {
     unitPositions[unit] = {{x, y}, playerNumber};
 }
 
-void World::placeBuilding(int playerNumber){
+Building* World::placeBuilding(int playerNumber){
     int x, y;
     do {
         x = rand() % size;
         y = rand() % size;
     } while (isPositionOccupied(x, y));
 
-    Building* building;
-    if (grid[x][y]->getType() == "Plains") {
-        building = new GoldMine();
-    } else {
-        building = new GoldPanner();
-    }
+    Building* building = (grid[x][y]->getType() == "Plains") ? new GoldMine() : new GoldPanner();
     buildingPositions[building] = {{x, y}, playerNumber};
+    return building;
 }
 
 bool World::moveUnit(Unit* unit, const std::string& direction, int playerNumber) {
@@ -141,6 +157,13 @@ void World::displayMapWithSight(int playerNumber, int sight, Unit* unit) const {
                 for (const auto& pair : unitPositions) {
                     if (pair.second.first.first == i && pair.second.first.second == j) {
                         tile = getUnitToken(pair.first, pair.second.second);
+                        break;
+                    }
+                }
+
+                for (const auto& pair : buildingPositions) {
+                    if (pair.second.first.first == i && pair.second.first.second == j) {
+                        tile = getBuildingToken(pair.first, pair.second.second);
                         break;
                     }
                 }

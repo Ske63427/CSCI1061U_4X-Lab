@@ -14,6 +14,10 @@ void Player::addUnit(Unit* unit) {
     units.push_back(unit);
 }
 
+void Player::addBuilding (Building* building){
+    buildings.push_back(building);
+}
+
 const std::vector<Unit*>& Player::getUnits() const {
     return units;
 }
