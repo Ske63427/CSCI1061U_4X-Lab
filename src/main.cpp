@@ -50,6 +50,9 @@ int main() {
     while (userChoice != 'y') {
         for (int i = 0; i < numberOfPlayers; ++i) {
             std::cout << "\n--- Player " << (i + 1) << " Turn ---\n";
+            std::cout << "Gold: " << players[i].getGoldReserve() << "\n";
+
+            players[i].collectBuildingIncome();
 
             Scout::setPlayerVisionBonus(i, players[i].getVisionBonus());
 

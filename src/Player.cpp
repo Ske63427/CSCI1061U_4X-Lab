@@ -8,6 +8,27 @@
 
 Player::Player() {
     visionBonus = 0;
+    goldReserve = 10;
+}
+
+void Player::increaseGoldReserve(int goldAdded){
+    goldReserve += goldAdded;
+}
+
+void Player::decreaseGoldReserve(int goldRemoved){
+    goldReserve -= goldRemoved;
+}
+
+int Player::getGoldReserve() const {
+    return goldReserve;
+}
+
+void Player::collectBuildingIncome() {
+    for (Building* building : buildings) {
+        if (building->getName() == "Gold Mine" || building->getName() == "Gold Panner") {
+            goldReserve += 2;
+        }
+    }
 }
 
 void Player::addUnit(Unit* unit) {
@@ -82,7 +103,6 @@ void Player::applyVisionBonus(int amount) {
 int Player::getVisionBonus() const {
     return visionBonus;
 }
-
 
 int Player::getResearcherCount() const {
     int count = 0;

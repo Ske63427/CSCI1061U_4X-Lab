@@ -1,7 +1,8 @@
-# pragma once
+#pragma once
 
 #include "Unit.h"
-#include "World.h"
+#include "../include/World.h"
+
 #include <iostream>
 
 // required to make new tech, you can just find them randomly (it is set to 100% for now tho)

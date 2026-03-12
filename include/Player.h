@@ -16,6 +16,7 @@ class Player {
     std::vector<std::shared_ptr<Technology>> researchedTechnologies;
     std::shared_ptr<Technology> activeResearch;
     int visionBonus;
+    int goldReserve;
 
     public:
         Player();
@@ -36,6 +37,11 @@ class Player {
         bool canResearch() const;
         int getResearchSpeed() const;
         void tryFindResearcher(World& world, int playerNumber);
+
+        void increaseGoldReserve (int goldAdded);
+        void decreaseGoldReserve (int goldRemoved);
+        int getGoldReserve() const;
+        void collectBuildingIncome();
 };
 
 #endif // PLAYER_H

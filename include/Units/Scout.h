@@ -2,7 +2,8 @@
 #define SCOUT_H
 
 #include "Unit.h"
-#include "World.h"
+#include "../include/World.h"
+
 #include <iostream>
 #include <map>
 

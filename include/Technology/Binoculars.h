@@ -2,7 +2,7 @@
 #define BINOCULARS_H
 
 #include "Technology.h"
-#include "Player.h"
+#include "../include/Player.h"
 
 // They just buff your sight range, requires researchers
 class Binoculars : public Technology {
