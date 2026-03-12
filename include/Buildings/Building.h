@@ -15,6 +15,7 @@ class Building {
         virtual ~Building() {}
         
         const std::string& getName() const { return name; }
+        virtual int getResourceOutput() const = 0;
 };
 
 #endif

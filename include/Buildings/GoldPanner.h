@@ -6,6 +6,7 @@
 class GoldPanner : public Building {
     public:
         GoldPanner() : Building("Gold Panner", 2) {}
+        int getResourceOutput() const override { return 2; }
 };
 
 #endif
