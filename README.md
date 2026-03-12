@@ -1,4 +1,5 @@
 Labs 6 and 7 will cover the same topic: Object-Oriented Programming (OOP). However, unlike the other labs, this will be the only lab where you can complete some of the work outside of the lab session. You will be required to complete the first four checkpoints during the first lab (Lab #6), however, you may work on the final four checkpoints outside of the lab. You are required to attend Lab #7 to show and explain your work to the TA and receive credit for the final four checkpoints.
+
 ---
 There are four main principles of OOP:
 
