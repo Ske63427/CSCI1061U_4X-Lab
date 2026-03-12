@@ -115,7 +115,13 @@ Building* World::placeBuilding(int playerNumber){
         y = rand() % size;
     } while (isPositionOccupied(x, y));
 
-    Building* building = (grid[x][y]->getType() == "Plains") ? new GoldMine() : new GoldPanner();
+    //Building* building = (grid[x][y]->getType() == "Plains") ? new GoldMine() : new GoldPanner();
+    Building* building = nullptr; 
+    if (grid[x][y]->getType() == "Plains") {
+        building = new GoldMine();
+    } else {
+        building = new GoldPanner();
+    }
     buildingPositions[building] = {{x, y}, playerNumber};
     return building;
 }

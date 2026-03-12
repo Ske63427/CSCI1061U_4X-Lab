@@ -37,13 +37,13 @@ The starter folder contains the initial code for the simulation, as well as a ma
 
 # New Terrain
 
-Before implementing any new content, take some time to review the Terrain.h and Plains.h files. Because Terrain has a pure virtual function getType that is equal to 0 (in other words, not implemented), Terrain is what we call an abstract class - it is not possible to create a Terrain object, but it serves as a sort of template for other classes that can represent different kinds of areas (e.g. Plains, Water, Mountains, Forests, etc.). The Plains class inherits from the Terrain class, which is done in the first line of code:
+Before implementing any new content, take some time to review the Terrain.h and Plains.h files. Because Terrain has a **pure virtual function** getType that is equal to 0 (in other words, not implemented), Terrain is what we call an **abstract class** - it is not possible to create a Terrain object, but it serves as a sort of template for other classes that can represent different kinds of areas (e.g. Plains, Water, Mountains, Forests, etc.). The Plains class **inherits** from the Terrain class, which is done in the first line of code:
 ```
 class Plains : public Terrain {
 ```
-Here, we declare that a Plains \* is \* a Terrain - the "is a" relationship is an example of the OOP principle of Inheritance. This means that Plains is obligated to implement the pure virtual function getType in order to be a concrete (and not an abstract) class that can be instantiated. We would say that Terrain is an abstraction of what it means to be an area in the World, and Plains is just one example of what that might look like in reality.
+Here, we declare that a Plains \* is \* a Terrain - the "is a" relationship is an example of the OOP principle of **Inheritance**. This means that Plains is obligated to implement the pure virtual function getType in order to be a **concrete** (and not an abstract) class that can be **instantiated**. We would say that Terrain is an **abstraction** of what it means to be an area in the World, and Plains is just one example of what that might look like in reality.
 
-The reason we say public Terrain when defining a Plains is because we want the public Terrain functions to remain public for our program. In a case where Terrain has public functions that we don't want anyone accessing through a Plains, you would inherit from Terrain using either private or protected (protected is like private, except that subclasses can still access the member). This protection of data from being accessed is part of encapsulation, where a class should avoid making too many members public unless necessary.
+The reason we say public Terrain when defining a Plains is because we want the public Terrain functions to remain public for our program. In a case where Terrain has public functions that we don't want anyone accessing through a Plains, you would inherit from Terrain using either private or protected (**protected** is like private, except that subclasses can still access the member). This protection of data from being accessed is part of **encapsulation**, where a class should avoid making too many members public unless necessary.
 
 To get some practice implementing your own derived class (that inherits from Terrain, just like Plains does), choose a type of Terrain (either from the aforementioned examples, or make up your own!), and add the class to the program. You must, at a minimum:
 
@@ -52,10 +52,9 @@ To get some practice implementing your own derived class (that inherits from Ter
  - Modify the World.cpp's displayMap function to display your terrain type using a different symbol than the . for Plains
      - You will later need to adjust the displayMapWithSight function to do this as well, but it can't be implemented just yet since we don't have any Units to see anything
 
-
 # Units and Scouts
 
-Now that we have a slightly more varied World, we need to populate it with Units. Each Player will control Units that perform actions on their turn, which differ based on the type of Unit. This is an example of Polymorphism - we want the Players to be able to use the same interface to interact with their Units, but what actually happens should be dependent on the Unit's type. To do so, we'll need to make the Unit class an abstract class with virtual methods, and then create our own derived class that is the Player's first Unit.
+Now that we have a slightly more varied World, we need to populate it with Units. Each Player will control Units that perform **actions** on their turn, which differ based on the type of Unit. This is an example of **Polymorphism** - we want the Players to be able to use the same interface to interact with their Units, but what actually happens should be dependent on the Unit's type. To do so, we'll need to make the Unit class an abstract class with virtual methods, and then create our own derived class that is the Player's first Unit.
 
 You can create a header file for Unit (i.e. Unit.h) since it won't have much implemented in it and won't change for the rest of this lab. Here is the necessary content for the Unit abstract class:
 
@@ -63,7 +62,7 @@ You can create a header file for Unit (i.e. Unit.h) since it won't have much imp
  - A constructor, virtual deconstructor, and getter function for the sight
  - virtual functions to get the name of the Unit and perform an action in the World
      - The action method will need two parameters - one for the number representing which Player controls the Unit, and another which is a reference to the World.
-     - Because the World needs to know what a Unit is in order for its functions to work, and the Unit needs to know what a World is in order to interact with it, we have created a Circular Dependency. To resolve this, you will need to put the following code at the top of your Unit header (below the include guards):
+     - Because the World needs to know what a Unit is in order for its functions to work, and the Unit needs to know what a World is in order to interact with it, we have created a **Circular Dependency**. To resolve this, you will need to put the following code at the top of your Unit header (below the include guards):
     ```
     class World; // Forward declaration
     ```
