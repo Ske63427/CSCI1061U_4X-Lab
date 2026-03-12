@@ -1,7 +1,8 @@
-#include "Player.h"
-#include "Binoculars.h"
-#include "Researcher.h"
-#include "World.h"
+#include "../include/Player.h"
+#include "../include/World.h"
+#include "../include/Technology/Binoculars.h"
+#include "../include/Units/Researcher.h"
+
 #include <iostream>
 #include <cstdlib>
 

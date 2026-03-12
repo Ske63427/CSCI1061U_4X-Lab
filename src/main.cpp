@@ -1,10 +1,11 @@
-#include "World.h"
-#include "Player.h"
-#include "Plains.h"
-#include "Swamp.h"
-#include "Scout.h"
-#include "Researcher.h"
-#include "horse.h"
+#include "../include/World.h"
+#include "../include/Player.h"
+#include "../include/Terrain/Plains.h"
+#include "../include/Terrain/Swamp.h"
+#include "../include/Units/Scout.h"
+#include "../include/Units/Researcher.h"
+#include "../include/Units/Horse.h"
+
 #include <vector>
 #include <iostream>
 #include <cstdlib>

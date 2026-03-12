@@ -1,6 +1,7 @@
-#include "World.h"
-#include "Plains.h"
-#include "Swamp.h"
+#include "../include/World.h"
+#include "../include/Terrain/Plains.h"
+#include "../include/Terrain/Swamp.h"
+
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
