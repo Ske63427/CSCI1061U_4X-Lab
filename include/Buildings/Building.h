@@ -9,9 +9,12 @@ class Building {
         int resourcesGenerated;
 
     public:
-        virtual ~Building() {}
         Building(const std::string& buildingName, int resourcesGenerated)
-        : name(buildingName), resourcesGenerated(resourcesGenerated) {}  
+            : name(buildingName), resourcesGenerated(resourcesGenerated) {}
+        
+        virtual ~Building() {}
+        
+        const std::string& getName() const { return name; }
 };
 
 #endif

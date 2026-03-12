@@ -1,6 +1,8 @@
 #include "../include/World.h"
 #include "../include/Terrain/Plains.h"
 #include "../include/Terrain/Swamp.h"
+#include "../include/Buildings/GoldMine.h"
+#include "../include/Buildings/GoldPanner.h"
 
 #include <cstdlib>
 #include <ctime>
@@ -86,6 +88,22 @@ void World::placeUnitRandomly(Unit* unit, int playerNumber) {
     unitPositions[unit] = {{x, y}, playerNumber};
 }
 
+void World::placeBuilding(int playerNumber){
+    int x, y;
+    do {
+        x = rand() % size;
+        y = rand() % size;
+    } while (isPositionOccupied(x, y));
+
+    Building* building;
+    if (grid[x][y]->getType() == "Plains") {
+        building = new GoldMine();
+    } else {
+        building = new GoldPanner();
+    }
+    buildingPositions[building] = {{x, y}, playerNumber};
+}
+
 bool World::moveUnit(Unit* unit, const std::string& direction, int playerNumber) {
     auto it = unitPositions.find(unit);
     if (it == unitPositions.end() || it->second.second != playerNumber) return false;
@@ -138,11 +156,19 @@ void World::displayMapWithSight(int playerNumber, int sight, Unit* unit) const {
 }
 
 bool World::isPositionOccupied(int x, int y) const {
+    //check for units
     for (const auto& pair : unitPositions) {
         if (pair.second.first.first == x && pair.second.first.second == y) {
             return true;
         }
     }
+
+    for (const auto& pair : buildingPositions) {
+        if (pair.second.first.first == x && pair.second.first.second == y) {
+            return true;
+        }
+    }
+
     return false;
 }
 
